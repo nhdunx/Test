@@ -5,7 +5,6 @@ const mapping = {
 var ua = $request.headers["User-Agent"] || $request.headers["user-agent"];
 var obj = JSON.parse($response.body);
 
-// Base entitlement info
 let entitlementInfo = {
   grace_period_expires_date: null,
   purchase_date: "2024-01-01T00:00:00Z",
@@ -17,12 +16,11 @@ let entitlementInfo = {
   is_active: true
 };
 
-// Gán vào entitlements
+obj.subscriber = obj.subscriber || {};
 obj.subscriber.entitlements = {
   Gold: entitlementInfo
 };
 
-// Gán vào subscriptions
 obj.subscriber.subscriptions = {
   "com.locket.gold.yearly": {
     ...entitlementInfo,
@@ -32,12 +30,27 @@ obj.subscriber.subscriptions = {
   }
 };
 
-// Các thuộc tính bổ sung để hiển thị huy hiệu
+// Các flag liên quan đến huy hiệu
 obj.subscriber.profileBadge = "locket_gold_badge";
+obj.subscriber.profileBadgeEnabled = true;
 obj.subscriber.hasActiveBadges = true;
 obj.subscriber.badgeCount = 1;
-obj.subscriber.profileBadgeEnabled = true;
+
+// Dự phòng các key phụ có thể bị kiểm tra
 obj.subscriber.is_active = true;
-obj.subscriber.goldMaxDuration = 120; // Giới hạn độ dài video 120 giây nếu có dùng
+obj.subscriber.goldMaxDuration = 120;
+obj.subscriber.activeBadge = {
+  name: "locket_gold_badge",
+  displayName: "Gold Badge",
+  isActive: true,
+  isHidden: false
+};
+obj.subscriber.badges = [{
+  name: "locket_gold_badge",
+  displayName: "Gold Badge",
+  isActive: true,
+  isHidden: false
+}];
 
 $done({ body: JSON.stringify(obj) });
+
