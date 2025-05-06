@@ -1,8 +1,20 @@
-/***********************************************
-> deleteHeader by DungMomx
-***********************************************/	
+// deleteHeader.js
 
-const version = 'V1.0.2';
+// Danh sách các header nên xóa
+const headersToRemove = [
+  'X-RevenueCat-ETag',
+  'X-RevenueCat-Request-Time',
+  'X-RevenueCat-User-Agent',
+  'Authorization',
+  'User-Agent',
+  'Accept-Language'
+];
 
+// Xóa các header đó khỏi request
+for (let header of headersToRemove) {
+  if ($request.headers[header]) {
+    delete $request.headers[header];
+  }
+}
 
-function setHeaderValue(e,a,d){var r=a.toLowerCase();r in e?e[r]=d:e[a]=d}var modifiedHeaders=$request.headers;setHeaderValue(modifiedHeaders,"X-RevenueCat-ETag",""),$done({headers:modifiedHeaders});
+$done({ headers: $request.headers });
