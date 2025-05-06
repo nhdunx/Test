@@ -24,7 +24,7 @@ obj.subscriber.entitlements = {
 obj.subscriber.subscriptions = {
   "com.locket.gold.yearly": {
     ...entitlementInfo,
-    original_purchase_date: "2024-01-01T00:00:00Z",
+    original_purchase_date: "1945-09-02T00:00:00Z",
     ownership_type: "PURCHASED",
     store: "app_store"
   }
