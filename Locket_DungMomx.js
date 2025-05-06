@@ -3,7 +3,7 @@ const mapping = {
 };
 
 var ua = $request.headers["User-Agent"] || $request.headers["user-agent"];
-vvar obj = JSON.parse($response.body);
+var obj = JSON.parse($response.body);
 
 let entitlementInfo = {
   grace_period_expires_date: null,
