@@ -3,7 +3,7 @@ const mapping = {
 };
 
 var ua = $request.headers["User-Agent"] || $request.headers["user-agent"];
-var obj = JSON.parse($response.body);
+vvar obj = JSON.parse($response.body);
 
 let entitlementInfo = {
   grace_period_expires_date: null,
@@ -30,27 +30,47 @@ obj.subscriber.subscriptions = {
   }
 };
 
-// Các flag liên quan đến huy hiệu
+// Các flag và thông tin liên quan đến huy hiệu & Gold
 obj.subscriber.profileBadge = "locket_gold_badge";
 obj.subscriber.profileBadgeEnabled = true;
 obj.subscriber.hasActiveBadges = true;
 obj.subscriber.badgeCount = 1;
-
-// Dự phòng các key phụ có thể bị kiểm tra
-obj.subscriber.is_active = true;
 obj.subscriber.goldMaxDuration = 120;
+obj.subscriber.is_active = true;
+
 obj.subscriber.activeBadge = {
   name: "locket_gold_badge",
   displayName: "Gold Badge",
   isActive: true,
   isHidden: false
 };
-obj.subscriber.badges = [{
-  name: "locket_gold_badge",
-  displayName: "Gold Badge",
+
+obj.subscriber.badges = [
+  {
+    name: "locket_gold_badge",
+    displayName: "Gold Badge",
+    isActive: true,
+    isHidden: false
+  }
+];
+
+// Bật các tính năng có thể kiểm tra ở client
+obj.subscriber.features = {
+  showFreeTrialOffer: false,
+  showDiscountOffer: false,
+  showInviteButton: true,
+  isLocketGoldUser: true,
+  locketGoldBadge: true,
+  locketGoldMainWithTweaks: true,
+  LocketGoldOnePageFlow: true,
+  DynamicLocketGoldFallbackView: true
+};
+
+// Đảm bảo mọi logic kiểm tra .is_active hay Gold đều đúng
+obj.subscriber.LocketGold = {
   isActive: true,
-  isHidden: false
-}];
+  membershipBadge: "locket_gold_badge",
+  perks: ["no_ads", "unlimited_friends", "longer_videos"]
+};
 
 $done({ body: JSON.stringify(obj) });
-
